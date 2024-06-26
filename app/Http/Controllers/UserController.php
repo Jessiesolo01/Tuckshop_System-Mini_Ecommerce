@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use id;
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,45 +17,50 @@ use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
     public function register(){
-        return view("register");
+        return view("users.register");
     }
     public function login(){
-        return view("login");
+        return view("users.login");
     }
     public function registerPost(Request $request){
-        $incomingFields = $request->validate([
-            "name"=>["required","min:2"],
-            "email"=> ["required", "email", Rule::unique("users", "email")],
-            "password"=> ["required","min:4", "max:250"],
+        $validated = $request->validate([
+            'name'=>'required|min:2',
+            'email'=> 'required|email|exists:users,email',
+            'password'=> 'required|min:4|max:250|confirmed',
+            'password_confirmation'=> 'required'
         ]);
-        $incomingFields["password"] = bcrypt($incomingFields["password"]);
-        
-        $user = User::create($incomingFields);
+        // dd($request->all());
+        $validated["password"] = bcrypt($validated["password"]);    
+        $user = User::create($validated);
+        $id =$user->id;
         auth()->login($user);
-
-        return redirect("/dashboard");
+        return redirect()->to(route('dashboard', [$id]));
     }
     public function loginPost(Request $request){
         
-        $incomingFields = $request->validate([
-            "loginemail"=>"required",
-            "loginpassword"=> "required"
+        $validated = $request->validate([
+            "email"=>"required",
+            "password"=> "required"
         ]);
-        if(auth()->attempt(['email'=>$incomingFields['loginemail'], 'password'=>$incomingFields['loginpassword']])){
+        if(auth()->attempt(['email'=>$validated['email'], 'password'=>$validated['password']])){
             $request->session()->regenerate();
             $user = Auth::user();
-            return redirect("/dashboard");
+            $id = $user->id;
+
+            return redirect()->to(route('dashboard', [$id]));
         }
         else{
-            return redirect("/signin");
+            return redirect()->to(route('login'));
+
         }
     }
     public function logout(){
         auth()->logout();
         return redirect("/");
     }
-    public function dashboard(Request $request, $user){
-        return view("dashboard", compact("user"));
+    public function dashboard(Request $request, $username){
+        $username = Auth::user()->name;
+        return view("users.dashboard", compact("username"));
     }
     // public function forgotPassword(){
 

@@ -1,33 +1,40 @@
+<?php
+// <!-- app/Http/Controllers/UserController.php app/Http/Controllers/Controller.php -->
+use id;
+use Carbon\Carbon;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
-public function forgotPassword(){
-      // $data = $request->validate([
-        //     'token' => 'required',
-        //     'resetpassword_email' => ['required', 'email', 'exists:users,email'],
-        //     'resetpassword' => 'required|min:4|confirmed',
-        // ]);
-        // $request->validate([
-        //     'token' => 'required',
-        //     'resetpassword_email' => 'required|email|exists:users,email',
-        //     'resetpassword' => 'required|min:4|max:200|confirmed',
-        // ]);
-        return view("forgot-password");
-    }
+class ResetPasswordController extends Controller
+{
+    public function forgotPassword(){
+            return view("forgot-password");
+        }
 
     public function forgotPasswordPost(Request $request){
         $request->validate([
-            "resetemail"=>["required","email", "exists:users,email"],
+            'email'=>'required|email',
         ]);
-        $email = $request->resetemail;
+        $email = $request->email;
         $token = Str::random(64);
         
-        DB::table('password_reset')->insert([
+        DB::table('password_resets')->insert([
             "email"=>$email,
             "token"=>$token,
             "created_at"=>Carbon::now(),
         ]);
         Mail::send("emails.forgot-password", ['token'=>$token, 'email'=>$email], function($message) use ($request){
-            $message->to($request->resetemail);
+            $message->to($request->email);
             $message->subject('Reset Password');
         });
 
@@ -43,16 +50,12 @@ public function forgotPassword(){
     }
 
 
-    // public function resetPasswordPost(Request $request){
-    // public function resetPasswordPost(Request $request, User $user){
-  
-  
     public function resetPasswordPost(Request $request){
         $request->validate([
             'token' => 'required',
-            'resetpassword_email' => 'required|email|exists:users,email',
-            'resetpassword' => 'required|min:4|max:200|confirmed',
-            'resetpassword_confirmation' => 'required'
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:4|max:200|confirmed',
+            'password_confirmation' => 'required'
         ]);
 // };
         $token = $request->token;
@@ -113,3 +116,4 @@ public function forgotPassword(){
 
         // return redirect('/signin');
     }
+}
