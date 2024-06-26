@@ -25,7 +25,7 @@ class AdminController extends Controller
             "username"=>"required",
             "password"=> "required"
         ]);
-        if(auth()->attempt(['email'=>$validated['email'], 'password'=>$validated['password']])){
+        if(auth()->attempt(['username'=>$validated['username'], 'password'=>$validated['password']])){
             $request->session()->regenerate();
             $user = Auth::user();
             $id = $user->id;
