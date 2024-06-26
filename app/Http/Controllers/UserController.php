@@ -30,10 +30,11 @@ class UserController extends Controller
             'password_confirmation'=> 'required'
         ]);
         // dd($request->all());
-        $validated["password"] = bcrypt($validated["password"]);    
+        $validated['password'] = bcrypt($validated['password']);    
         $user = User::create($validated);
-        $id =$user->id;
         auth()->login($user);
+        $id =$user->id;
+        // return redirect('/dashboard/{id}');
         return redirect()->to(route('dashboard', [$id]));
     }
     public function loginPost(Request $request){
@@ -58,9 +59,11 @@ class UserController extends Controller
         auth()->logout();
         return redirect("/");
     }
-    public function dashboard(Request $request, $username){
+    public function dashboard(Request $request){
         $username = Auth::user()->name;
-        return view("users.dashboard", compact("username"));
+        $id =$username->id;
+
+        return view("users.dashboard", compact('username','id'));
     }
     // public function forgotPassword(){
 

@@ -10,8 +10,8 @@
     <h1>Create an Account</h1>
     <form action="{{ route('register.post') }}" method="POST">
         @csrf
-        <input type="text" name="name" placeholder="Enter your full name">
-        <input type="text" name="email" placeholder="Enter your email">
+        <input type="text" name="name" placeholder="Enter your full name" autocomplete="on">
+        <input type="text" name="email" placeholder="Enter your email" autocomplete="on">
         <input type="password" name="password" placeholder="Enter your password">
         <input type="password" name="password_confirmation" placeholder="Confirm password">
         <button>Register</button>

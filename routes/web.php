@@ -1,9 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\AdminController;
 
 Route::prefix('admin')->group(function (){
     Route::get('/', function(){

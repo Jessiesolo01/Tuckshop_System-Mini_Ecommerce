@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 class ResetPasswordController extends Controller
 {
     public function forgotPassword(){
-            return view("forgot-password");
+            return view("password_reset.forgot-password");
         }
 
     public function forgotPasswordPost(Request $request){
@@ -46,7 +46,7 @@ class ResetPasswordController extends Controller
         //     "email"=> $request->resetemail,
         // ]);
         // $email = $request->resetemail;
-        return view("reset-password", compact("token"));
+        return view("password_reset.reset-password", compact("token"));
     }
 
 
@@ -61,9 +61,9 @@ class ResetPasswordController extends Controller
         $token = $request->token;
 
         // dd($request->all());
-        $updatePassword = DB::table('password_reset')
+        $updatePassword = DB::table('password_resets')
             ->where([
-                'email' => $request->resetpassword_email,
+                'email' => $request->email,
                 'token' => $request->token
                 // 'token' => $token
             ])
@@ -77,40 +77,16 @@ class ResetPasswordController extends Controller
                 
         }
         // #######----INITIAL SOLUTION
-        User::where('email', $request->resetpassword_email)
+        User::where('email', $request->email)
             ->update([
-                'password' => bcrypt($request->resetpassword)
+                'password' => bcrypt($request->password)
             ]);
 
-        // #############NO 1 SOLUTION
-        // $updateUser = User::where('email', $request->resetpassword_email)
-        // $updateUser->save();
-        ///
-
-        // ###########NO 2 SOLUTION
-        // DB::table('users')
-        //     ->where(['email'=>$request->resetpassword_email])
-        //     ->update(['password' => bcrypt($request->resetpassword)]);
-        
-        // ###########NO 3 SOLUTION
-        // User::update(['password'=>bcrypt($request->resetpassword)])::where('email', $request->resetpassword_email)->first();
-        
-        // #############NO 4 SOLUTION
-        // $updateUserPassword = User::where('email', $request->resetpassword_email);
-        // $newPassword = bcrypt($request->resetpassword);
-        // $updateUserPassword->password = $request->input($newPassword);
-        // $updateUserPassword->save();
-
-        // #############NO 5 SOLUTION
-        // $user->update([$user->password = bcrypt($data['resetpassword'])]);
-        // 
-        // $user->update([$user['password'] => bcrypt($data['resetpassword'])]);
-
-        DB::table('password_reset')
-            ->where(['email' => $request->resetpassword_email])
+        DB::table('password_resets')
+            ->where(['email' => $request->email])
             ->delete();
 
-        return redirect()->to(route('signin'))
+        return redirect()->to(route('login'))
             ->with('success', 'Password reset successful');
         // return redirect()->route('signin');
 
