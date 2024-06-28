@@ -7,7 +7,7 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <h1>Welcome Admin {{$username}}</h1>
+    <h1>Welcome Admin {{ $username }}</h1>
     <form action="/logout" method="POST">
         @csrf
         <button>Logout</button>

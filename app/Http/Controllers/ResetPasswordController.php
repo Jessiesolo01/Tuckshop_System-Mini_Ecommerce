@@ -1,5 +1,6 @@
 <?php
 // <!-- app/Http/Controllers/UserController.php app/Http/Controllers/Controller.php -->
+namespace App\Http\Controllers;
 use id;
 use Carbon\Carbon;
 

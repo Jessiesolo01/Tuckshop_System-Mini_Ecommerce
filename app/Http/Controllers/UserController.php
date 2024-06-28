@@ -25,7 +25,7 @@ class UserController extends Controller
     public function registerPost(Request $request){
         $validated = $request->validate([
             'name'=>'required|min:2',
-            'email'=> 'required|email|exists:users,email',
+            'email'=> 'required|email|unique:users,email',
             'password'=> 'required|min:4|max:250|confirmed',
             'password_confirmation'=> 'required'
         ]);
@@ -61,9 +61,11 @@ class UserController extends Controller
     }
     public function dashboard(Request $request){
         $username = Auth::user()->name;
-        $id =$username->id;
+        // $id =Auth::user()->id;
 
-        return view("users.dashboard", compact('username','id'));
+        // return view("users.dashboard", compact('username','id'));
+        return view("users.dashboard", compact('username'));
+
     }
     // public function forgotPassword(){
 
