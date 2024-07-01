@@ -1,5 +1,4 @@
 <?php
-// <!-- app/Http/Controllers/UserController.php app/Http/Controllers/Controller.php -->
 namespace App\Http\Controllers;
 use id;
 use Carbon\Carbon;
@@ -18,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 
-class ResetPasswordController extends Controller
+class AdminResetPasswordController extends Controller
 {
     public function forgotPassword(){
-            return view("password_reset.forgot-password");
+            return view("admin_password_reset.forgot-password");
         }
 
     public function forgotPasswordPost(Request $request){
@@ -36,12 +35,12 @@ class ResetPasswordController extends Controller
             "token"=>$token,
             "created_at"=>Carbon::now(),
         ]);
-        Mail::send("emails.users.forgot-password", ['token'=>$token, 'email'=>$email], function($message) use ($request){
+        Mail::send("emails.admins.forgot-password", ['token'=>$token, 'email'=>$email], function($message) use ($request){
             $message->to($request->email);
             $message->subject('Reset Password');
         });
 
-        return redirect()->to(route('forgot.password'))->with('success','We have sent you an email to reset password');
+        return redirect()->to(route('admin.forgot.password'))->with('success','We have sent you an email to reset password');
     }
 
     public function resetPassword(Request $request, $token){
@@ -51,14 +50,15 @@ class ResetPasswordController extends Controller
         $email = DB::table('password_resets')
         ->where('token', $token)
         ->first()->email;
-        return view("password_reset.reset-password", compact("token", "email"));
+        return view("admin_password_reset.reset-password", compact("token", "email"));
     }
 
 
     public function resetPasswordPost(Request $request){
         $request->validate([
             'token' => 'required',
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email|exists:admins,email',
+            // 'email' => 'required|email',
             'password' => 'required|min:4|max:200|confirmed',
             'password_confirmation' => 'required'
         ]);
@@ -76,23 +76,44 @@ class ResetPasswordController extends Controller
             // dd($updatePassword);
         
         if (!$updatePassword) {
-            return redirect()->to(route('reset.password', ['token'=>$token]))
+            return redirect()->to(route('admin.reset.password', ['token'=>$token]))
                 ->with('error', 'Invalid token or email');
             // return redirect()->route('reset.password');
                 
         }
         // #######----INITIAL SOLUTION
         
-        User::where('email', $request->email)
+        Admin::where('email', $request->email)
             ->update([
                 'password' => bcrypt($request->password)
             ]);
-     
+
+// #####THIS SECOND SOLUTION WORKS AS WELL
+        // DB::table('admins')
+        //     ->where(['email' => $request->email])
+        //     ->update([
+        //         'password'=> bcrypt($request->password)
+        //     ]);
+                // dd($request->all());
+
+            // if(!$userUpdate){
+            //     Admin::where('email', $request->email)
+            //     ->update([
+            //         'password' => bcrypt($request->password)
+            //     ]);
+            // }
+        // if(!$userUpdate){
+        //     DB::table('admins')
+        //     ->where(['email' => $request->email])
+        //     ->update([
+        //         'password'=> bcrypt($request->password)
+        //     ]);
+        // }
         DB::table('password_resets')
             ->where(['email' => $request->email])
             ->delete();
 
-        return redirect()->to(route('login'))
+        return redirect()->to(route('admin.login'))
             ->with('success', 'Password reset successful');
         // return redirect()->route('signin');
 

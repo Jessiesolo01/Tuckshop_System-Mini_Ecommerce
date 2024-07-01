@@ -15,7 +15,7 @@
         <button>Admin Login</button>
         <br>
         <br>
-        <a href="{{ route('forgot.password') }}">Forgot password?</a><br>
+        <a href="{{ route('admin.forgot.password') }}">Forgot password?</a><br>
     </form>
 </body>
 </html>

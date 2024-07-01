@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Reset Password</h1>
-    <form action="{{ route('reset.password.post') }}" method="POST">
+    <form action="{{ route('admin.reset.password.post') }}" method="POST">
         @csrf
         @method('PUT')
         <input type="text" name="token" hidden value="{{$token}}">

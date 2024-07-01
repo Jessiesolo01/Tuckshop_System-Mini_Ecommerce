@@ -42,7 +42,7 @@ class AdminController extends Controller
     }
     public function logout(){
         auth()->guard('admin')->logout();
-        return redirect("/");
+        return redirect("/admin");
     }
     public function dashboard(Request $request){
         // $username = Auth::guard('admin')->user()->name;
