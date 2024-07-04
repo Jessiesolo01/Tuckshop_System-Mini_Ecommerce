@@ -7,10 +7,20 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <h1>Welcome Admin {{ $username }}</h1>
-    <form action="/admin/logout" method="POST">
-        @csrf
-        <button>Logout</button>
-    </form>
+    <div>
+        <h1>Welcome Admin {{ $username }}</h1>
+        <form action="/admin/logout" method="POST">
+            @csrf
+            <button>Logout</button>
+        </form>
+    </div>
+    
+    @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+    @endif
+    <a href="{{ route('admin.showItem')}}">View Items</a><br>
+    <a href="{{ route('admin.addItem')}}">Add Items</a>
 </body>
 </html>

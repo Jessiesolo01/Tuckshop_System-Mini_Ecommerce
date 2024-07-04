@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\AdminResetPasswordController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ItemController;
 
 Route::prefix('admin')->group(function (){
     Route::get('/', function(){
@@ -19,6 +20,9 @@ Route::prefix('admin')->group(function (){
     Route::post('/forgot-password', [AdminResetPasswordController::class, 'forgotPasswordPost'])->name('admin.forgot.password.post');
     Route::put('/reset-password', [AdminResetPasswordController::class, 'resetPasswordPost'])->name('admin.reset.password.post');
     Route::get('/reset-password/{token}', [AdminResetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
+    Route::get('/add-item', [ItemController::class, 'addItem'])->name('admin.addItem');
+    Route::post('/add-item', [ItemController::class, 'addItemPost'])->name('admin.addItem.post');
+    Route::get('/items', [ItemController::class, 'showItem'])->name('admin.showItem');
 });
 Route::prefix('')->group(function(){
     Route::get('/', function () {
@@ -37,5 +41,6 @@ Route::prefix('')->group(function(){
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPasswordPost'])->name('forgot.password.post');
     Route::put('/reset-password', [ResetPasswordController::class, 'resetPasswordPost'])->name('reset.password.post');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('reset.password');
+
 });
 

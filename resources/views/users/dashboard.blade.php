@@ -7,10 +7,12 @@
     <title>Dashboard</title>
 </head>
 <body>
+<div>
     <h1>Welcome {{$username}}</h1>
     <form action="/logout" method="POST">
         @csrf
         <button>Logout</button>
     </form>
+</div>
 </body>
 </html>
