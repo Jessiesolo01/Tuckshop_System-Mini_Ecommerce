@@ -14,9 +14,9 @@
         <input type="file" name="image">
         <input type="text" name="price" placeholder="Price of the item">
         <input type="text" name="no_of_items_in_stock" placeholder="Number in stock">
-        {{-- <input type="text" name="created_by">
-        <input type="text" name="updated_by">
-        <input type="text" name="created_at">
+        <input type="text" name="created_by" value="{{ $username }}" hidden>
+        <input type="text" name="updated_by" value="{{ $username }}" hidden>
+        {{-- <input type="text" name="created_at">
         <input type="text" name="updated_at"> --}}
         <button>Create Item</button>
     </form>

@@ -22,7 +22,11 @@ Route::prefix('admin')->group(function (){
     Route::get('/reset-password/{token}', [AdminResetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
     Route::get('/add-item', [ItemController::class, 'addItem'])->name('admin.addItem');
     Route::post('/add-item', [ItemController::class, 'addItemPost'])->name('admin.addItem.post');
+    Route::get('/edit-item/{id}', [ItemController::class, 'editItem'])->name('admin.editItem');
+    Route::put('/update-item/{id}', [ItemController::class, 'updateItem'])->name('admin.updateItem');
     Route::get('/items', [ItemController::class, 'showItem'])->name('admin.showItem');
+    Route::get('/delete-item', [ItemController::class, 'deleteItem'])->name('admin.deleteItem');
+
 });
 Route::prefix('')->group(function(){
     Route::get('/', function () {

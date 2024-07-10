@@ -73,6 +73,11 @@ return [
             'model' => env('AUTH_MODEL', App\Models\Admin::class),
             // 'model' => App\Models\Admin::class,
         ],
+        'items' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Item::class,
+            'table' =>'items'
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

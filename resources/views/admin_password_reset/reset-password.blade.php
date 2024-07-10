@@ -11,8 +11,8 @@
         @csrf
         @method('PUT')
         <input type="text" name="token" hidden value="{{$token}}">
-        <input type="email" name="email" value="{{ old('email') }}">
-        {{-- <input type="email" name="email" value="{{ $email }}"> --}}
+        {{-- <input type="email" name="email" value="{{ old('email') }}"> --}}
+        <input type="email" name="email" value="{{ $email }}">
         <input type="password" name="password" placeholder="Enter new password">
         <input type="password" name="password_confirmation" placeholder="Confirm password">
         <button>Reset</button>
