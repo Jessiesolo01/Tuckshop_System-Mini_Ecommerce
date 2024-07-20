@@ -21,6 +21,8 @@
     </div>
     @endif
     <a href="{{ route('admin.showItem')}}">View Items</a><br>
-    <a href="{{ route('admin.addItem')}}">Add Items</a>
+    <a href="{{ route('admin.addItem')}}">Add Items</a><br>
+    <a href="{{ route('admin.showUser')}}">View Users</a>
+
 </body>
 </html>

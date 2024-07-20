@@ -11,9 +11,17 @@
     <form action="{{ url('/admin/update-item/'.$item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        <input type="hidden" name="old_image" value="{{ $item->image }}">
         <input type="text" name="item_name" placeholder="Name of item" value="{{ $item->item_name }}">
-        {{-- <img src="/storage/{{ $item->image }}" alt="Picture of the item" class="w-70"> --}}
-        <input type="file" name="image" placeholder="Choose Image">
+        <div class="form-group">
+            <label for="imageInput">Update Item Image</label>
+            <input type="file" name="image" class="form-control" value="{{ $item->image }}">
+        </div>
+        <div class="form-group">
+            <img src="/storage/{{ $item->image }}" alt="Picture of the item" class="w-70">
+        </div>
+
+        {{-- <input type="file" name="image" placeholder="Choose Image"> --}}
         <input type="text" name="price" placeholder="Price of the item" value="{{ $item->price }}">
         <input type="text" name="no_of_items_in_stock" placeholder="Number in stock" value="{{ $item->no_of_items_in_stock }}">
         <input type="text" name="updated_by" value="{{ $username }}" hidden>

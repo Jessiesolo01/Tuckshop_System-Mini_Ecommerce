@@ -16,16 +16,25 @@ Route::prefix('admin')->group(function (){
     Route::post('/login', [AdminController::class, 'loginPost'])->name('admin.login.post');
     Route::get('/dashboard/{id}', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+    
     Route::get('/forgot-password', [AdminResetPasswordController::class, 'forgotPassword'])->name('admin.forgot.password');
     Route::post('/forgot-password', [AdminResetPasswordController::class, 'forgotPasswordPost'])->name('admin.forgot.password.post');
     Route::put('/reset-password', [AdminResetPasswordController::class, 'resetPasswordPost'])->name('admin.reset.password.post');
     Route::get('/reset-password/{token}', [AdminResetPasswordController::class, 'resetPassword'])->name('admin.reset.password');
+    
     Route::get('/add-item', [ItemController::class, 'addItem'])->name('admin.addItem');
     Route::post('/add-item', [ItemController::class, 'addItemPost'])->name('admin.addItem.post');
     Route::get('/edit-item/{id}', [ItemController::class, 'editItem'])->name('admin.editItem');
     Route::put('/update-item/{id}', [ItemController::class, 'updateItem'])->name('admin.updateItem');
     Route::get('/items', [ItemController::class, 'showItem'])->name('admin.showItem');
-    Route::get('/delete-item', [ItemController::class, 'deleteItem'])->name('admin.deleteItem');
+    Route::delete('/delete-item/{id}', [ItemController::class, 'deleteItem'])->name('admin.deleteItem');
+
+    Route::get('/add-user', [UserController::class, 'addUser'])->name('admin.addUser');
+    Route::post('/add-user', [UserController::class, 'addUserPost'])->name('admin.addUser.post');
+    Route::get('/edit-user/{id}', [UserController::class, 'editUser'])->name('admin.editUser');
+    Route::put('/update-user/{id}', [UserController::class, 'updateUser'])->name('admin.updateUser');
+    Route::get('/users-list', [UserController::class, 'showUser'])->name('admin.showUser');
+    Route::delete('/delete-user/{id}', [UserController::class, 'deleteUser'])->name('admin.deleteUser');
 
 });
 Route::prefix('')->group(function(){
