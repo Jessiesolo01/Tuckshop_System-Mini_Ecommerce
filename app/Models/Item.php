@@ -17,4 +17,7 @@ class Item extends Model
         'created_by',
         'updated_by'
         ];
+    public function cart(){
+        $this->belongsTo('App\Models\Cart');
+    }
 }

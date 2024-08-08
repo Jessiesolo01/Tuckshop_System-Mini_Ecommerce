@@ -2,11 +2,12 @@
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\AdminResetPasswordController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ItemController;
 
 Route::prefix('admin')->group(function (){
     Route::get('/', function(){
@@ -54,6 +55,13 @@ Route::prefix('')->group(function(){
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPasswordPost'])->name('forgot.password.post');
     Route::put('/reset-password', [ResetPasswordController::class, 'resetPasswordPost'])->name('reset.password.post');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('reset.password');
+
+    Route::post('/create-order/{id}', [OrderController::class, 'createOrderPost'])->name('create.order.post');
+    // Route::get('/cart/{id}', [OrderController::class, 'addToCart'])->name('cart');
+    Route::get('/cart/{id}', [OrderController::class, 'cart'])->name('cart.index');
+    Route::post('/cart/{id}', [OrderController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/{id}', [OrderController::class, 'deleteFromCart'])->name('cart.delete');
+    Route::get('/create-order', [OrderController::class, 'createOrder'])->name('create.order');
 
 });
 

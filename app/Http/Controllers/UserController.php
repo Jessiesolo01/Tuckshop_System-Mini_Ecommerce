@@ -62,10 +62,10 @@ class UserController extends Controller
     }
     public function dashboard(Request $request){
         $username = Auth::user()->name;
-        // $id =Auth::user()->id;
+        $id =Auth::user()->id;
 
-        // return view("users.dashboard", compact('username','id'));
-        return view("users.dashboard", compact('username'));
+        return view("users.dashboard", compact('username','id'));
+        // return view("users.dashboard", compact('username'));
 
     }
     public function editUser(Request $request, $id){//the id here is the param from the url(/edit-item/{id})

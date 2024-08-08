@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // 'providers' => [
+    //     // Other Service Providers
+
+    //     Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+    // ],
+    // 'aliases' => [
+    // // Other Aliases
+
+    // 'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+    // ],
+
+
 ];

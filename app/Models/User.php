@@ -21,7 +21,13 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    // public function programme(){
+    //     return $this->belongsTo('App\Programme');
+    // }
+ 
+    public function cart(){
+         return $this->hasMany('App\Models\Cart', 'user_id', 'id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
