@@ -6,10 +6,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "illuminate/support": "*",
+        "barryvdh/laravel-dompdf": "^3.0",
+        "dompdf/dompdf": "3.0",
+        "illuminate/support": "11.20",
         "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
+        "laravel/legacy-factories": "*",
+        "laravel/tinker": "^2.9",
+        "smalot/pdfparser": "^2.10",
+        "stevebauman/hypertext": "^1.1"
     },
+    
+    
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",

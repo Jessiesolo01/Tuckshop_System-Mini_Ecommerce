@@ -7,6 +7,8 @@
     <title>Edit Item</title>
 </head>
 <body>
+    {{-- <a href="{{ url('/admin/dashboard/'.$id) }}">Return to dashboard</a><br><br> --}}
+
     <h1>Edit Item</h1>
     <form action="{{ url('/admin/update-item/'.$item->id) }}" method="POST" enctype="multipart/form-data">
         @csrf

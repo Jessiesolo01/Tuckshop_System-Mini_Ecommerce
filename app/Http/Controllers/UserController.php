@@ -63,8 +63,10 @@ class UserController extends Controller
     public function dashboard(Request $request){
         $username = Auth::user()->name;
         $id =Auth::user()->id;
-
-        return view("users.dashboard", compact('username','id'));
+        $order = DB::table('users')->where('id', $id)->get();
+        $order = $order[0]->orders;
+        // dd($order[0]->orders);
+        return view("users.dashboard", compact('username','id', 'order'));
         // return view("users.dashboard", compact('username'));
 
     }
@@ -138,10 +140,36 @@ class UserController extends Controller
 
     // }
     public function showUser(Request $request, User $user){
+        $request->session()->all();
+        $username = Auth::guard('admin')->user()->username;
+        $admin_id =Auth::guard('admin')->user()->id;
+        $no_of_users = count(DB::table('users')->get());
+
         return view('admins.show-users', [
             'users' => DB::table('users')->paginate(15)
-        ]);
+        ], compact('admin_id', 'no_of_users'));
     }
+
+    public function searchUser(Request $request){
+        $user = Auth::guard('admin')->user();
+        $username = Auth::guard('admin')->user()->name;
+        $admin_id = Auth::guard('admin')->user()->id;
+
+        $query = $request->get('query');
+        // dd($query);
+        $users = DB::table('users')->where('id', 'LIKE', '%'.$query.'%')
+                           ->orWhere('name', 'LIKE', '%'.$query.'%')
+                           ->orWhere('email', 'LIKE', '%'.$query.'%')
+                           ->orWhere('updated_by', 'LIKE', '%'.$query.'%')
+                           ->orderBy('created_at', 'ASC');
+      
+        $no_of_users = count(DB::table('users')->get());
+
+        return view('admins.show-users', ['users'=>$users->paginate(15)],
+         compact('admin_id', 'username', 'no_of_users'));
+
+    }
+
     public function deleteUser(Request $request, $id){
         // auth()->guard('admin')->user();
         $request->session()->all();

@@ -7,6 +7,8 @@
     <title>Create Item</title>
 </head>
 <body>
+    <a href="{{ url('/admin/dashboard/'.$id) }}">Return to dashboard</a><br><br>
+
     <h1>Add Item</h1>
     <form action="{{ route('admin.addItem.post') }}" method="POST" enctype="multipart/form-data">
         @csrf

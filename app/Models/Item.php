@@ -18,6 +18,10 @@ class Item extends Model
         'updated_by'
         ];
     public function cart(){
-        $this->belongsTo('App\Models\Cart');
+        return $this->hasMany(Cart::class);
+    }
+
+    public function order(){
+        return $this->hasMany(Order::class);
     }
 }

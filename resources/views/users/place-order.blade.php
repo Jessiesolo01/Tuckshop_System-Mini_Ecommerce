@@ -17,6 +17,12 @@
         {{ session('error') }}
     </div>
     @endif
+    <br><br>
+    <a href="{{ url('/cart/'.$id) }}">Go to Cart</a>
+    <br><br>
+    <a href="{{ url('/dashboard/'.$id) }}">Return to dashboard</a>
+    <br><br>
+
     @foreach($items as $item)
         @if ($item->no_of_items_in_stock === 0)
         <div style="border:1px solid black; width:500px; display:flex; padding-top:10px ">
@@ -25,7 +31,7 @@
             @csrf
             <input type="text" name="id" value="{{ $id }}" hidden>
             <input type="text" name="item_id" value="{{ $item->id }}" hidden>
-            <p>{{ $item->item_name }}</p>
+            <p><b>{{ $item->item_name }}</b></p>
             <img src="/storage/{{ $item->image }}" alt="Picture of the item" class="w-50">
             <p style="margin-right: 20px">{{ $item->price }}</p>
             <input type="number" name="quantity" min="1" max="{{ $item->no_of_items_in_stock }}" placeholder="Quantity">
@@ -45,6 +51,7 @@
             @csrf
             <input type="text" name="id" value="{{ $id }}" hidden>
             <input type="text" name="item_id" value="{{ $item->id }}" hidden>
+            <p><b>{{ $item->item_name }}</b></p>
             <img src="/storage/{{ $item->image }}" alt="Picture of the item" class="w-50">
             <p style="margin-right: 20px">{{ $item->price }}</p>
             <input type="number" name="quantity" min="1" max="{{ $item->no_of_items_in_stock }}" placeholder="Quantity">

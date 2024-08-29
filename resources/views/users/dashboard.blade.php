@@ -9,8 +9,12 @@
 <body>
 <div>
     <h1>Welcome {{$username}}</h1>
-    <a href="{{ route('create.order')}}">Place An Order</a><br>
-    <a href="{{ url('/cart/'.$id) }}">Cart</a>
+    <a href="{{ route('create.order')}}">Place An Order</a><br><br>
+    <a href="{{ url('/cart/'.$id) }}">Cart</a><br><br>
+    <a href="{{ url('/update-wallet/'.$id) }}">Update Wallet</a><br><br>
+    @if ($order != 0)
+         <a href="{{ url('/order-details/'.$id) }}">Order Details</a> 
+    @endif
     <form action="/logout" method="POST">
         @csrf
         <button>Logout</button>

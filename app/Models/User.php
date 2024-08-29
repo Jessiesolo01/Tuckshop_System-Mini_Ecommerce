@@ -25,8 +25,20 @@ class User extends Authenticatable
     //     return $this->belongsTo('App\Programme');
     // }
  
+    // public function cart(){
+    //      return $this->hasMany('App\Models\Cart', 'user_id', 'id');
+    // }
+
+
+    public function order(){
+        return $this->hasMany(Order::class);
+    }
     public function cart(){
-         return $this->hasMany('App\Models\Cart', 'user_id', 'id');
+        return $this->hasMany(Cart::class);
+    }
+
+    public function receipt(){
+        return $this->hasMany(Receipt::class);
     }
     /**
      * The attributes that should be hidden for serialization.
@@ -50,4 +62,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
 }

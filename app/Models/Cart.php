@@ -22,11 +22,18 @@ class Cart extends Model
         'created_at',
         'updated_at'
         ];
-    public function item(){
-        return $this->hasMany('App\Models\Item', 'id', 'item_id');
+    // public function item(){
+    //     return $this->hasMany('App\Models\Item', 'id', 'item_id');
+    // }
+    // public function user()
+    // {
+    //     return $this->belongsTo('App\Models\User', 'id', 'user_id');
+    // }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User', 'id', 'user_id');
+    public function item(){
+        return $this->belongsTo(Item::class);
     }
 }

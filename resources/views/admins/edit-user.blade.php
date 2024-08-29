@@ -7,6 +7,8 @@
     <title>Edit User</title>
 </head>
 <body>
+    {{-- <a href="{{ url('/admin/dashboard/'.$id) }}">Return to dashboard</a><br><br> --}}
+
     <h1>Edit User</h1>
     <form action="{{ url('/admin/update-user/'.$user->id) }}" method="POST">
         @csrf

@@ -206,13 +206,38 @@ class ItemController extends Controller
 
 
     public function showItem(Request $request, Item $item){
+        $request->session()->all();
+        $username = Auth::guard('admin')->user()->username;
+        $admin_id =Auth::guard('admin')->user()->id;
 
+        $no_of_items = count(DB::table('items')->get());
         return view('admins.show-items', [
             'items' => DB::table('items')->paginate(30)
-            // 'item' => $item
-            // 'items' => $items
-        ]);
+        ], compact('admin_id', 'no_of_items'));
     }
+
+    public function searchItem(Request $request){
+        $user = Auth::guard('admin')->user();
+        $username = Auth::guard('admin')->user()->name;
+        $admin_id = Auth::guard('admin')->user()->id;
+
+        $query = $request->get('query');
+        // dd($query);
+        $items = DB::table('items')->where('id', 'LIKE', '%'.$query.'%')
+                           ->orWhere('item_name', 'LIKE', '%'.$query.'%')
+                           ->orWhere('price', 'LIKE', '%'.$query.'%')
+                           ->orWhere('no_of_items_in_stock', 'LIKE', '%'.$query.'%')
+                           ->orWhere('created_by', 'LIKE', '%'.$query.'%')
+                           ->orWhere('updated_by', 'LIKE', '%'.$query.'%')
+                           ->orderBy('created_at', 'DESC');
+    //   if($query )
+        $no_of_items = count(DB::table('items')->get());
+
+        return view('admins.show-items', ['items'=>$items->paginate(15)],
+         compact('admin_id', 'username', 'no_of_items'));
+
+    }
+
     public function deleteItem(Request $request, $id){
         // auth()->guard('admin')->user();
         $request->session()->all();
